@@ -1,0 +1,6 @@
+name = "miami-schools"
+compatibility_date = "2024-09-23"
+
+[[kv_namespaces]]
+binding = "SCHOOLS_KV"
+id = "" # Will be filled after creating the namespace

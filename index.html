@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>South Florida Private Schools</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>South Florida Private Schools</h1>
+    <p>South Broward &amp; Miami-Dade County — compare, filter, and track schools</p>
+  </header>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="active">
+      Active <span class="count" id="active-count">0</span>
+    </div>
+    <div class="tab" data-tab="nixed">
+      Nixed <span class="count" id="nixed-count">0</span>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div>
+      <label for="filter-county">County</label>
+      <select id="filter-county">
+        <option value="all">All Areas</option>
+        <option value="Miami-Dade">Miami-Dade</option>
+        <option value="Broward">Broward</option>
+      </select>
+    </div>
+    <div>
+      <label for="sort-by">Sort by</label>
+      <select id="sort-by">
+        <option value="name">Name</option>
+        <option value="tuition-asc">Tuition (low → high)</option>
+        <option value="tuition-desc">Tuition (high → low)</option>
+        <option value="enrollment">Enrollment (largest)</option>
+        <option value="city">City</option>
+      </select>
+    </div>
+    <div style="flex:1">
+      <label for="search">Search</label>
+      <input type="text" id="search" placeholder="Search schools, cities, types…">
+    </div>
+  </div>
+
+  <div class="status-bar">
+    <span>Showing <strong id="status-showing">0</strong> of <strong id="status-total">0</strong> schools</span>
+  </div>
+
+  <div class="school-grid" id="school-grid"></div>
+
+  <!-- Nix Modal -->
+  <div class="modal-overlay" id="nix-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="nix-modal-title">Nix School</h3>
+        <button class="modal-close" onclick="closeNixModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <label for="nix-reason">Reason for nixing <span class="required">*</span></label>
+        <textarea id="nix-reason" placeholder="Why are you removing this school from consideration?"></textarea>
+        <div class="error-msg" id="nix-error">A reason is required to nix a school.</div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeNixModal()">Cancel</button>
+        <button class="btn-confirm-danger" onclick="confirmNix()">Nix School</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notes Modal -->
+  <div class="modal-overlay" id="notes-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="notes-modal-title">School Notes</h3>
+        <button class="modal-close" onclick="closeNotesModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <label for="school-notes">Your notes</label>
+        <textarea id="school-notes" placeholder="Add your thoughts, tour impressions, questions…"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeNotesModal()">Cancel</button>
+        <button class="btn-confirm" onclick="saveNotes()">Save Notes</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
