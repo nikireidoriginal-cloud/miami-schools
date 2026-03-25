@@ -5,7 +5,6 @@ const SCHOOLS = [
     name: "American Heritage School - Broward",
     city: "Plantation",
     county: "Broward",
-    area: "South Broward",
     grades: "Pre-K3 – 12",
     tuition: "$33,000",
     tuitionNum: 33000,
@@ -22,7 +21,6 @@ const SCHOOLS = [
     name: "Pine Crest School - Fort Lauderdale",
     city: "Fort Lauderdale",
     county: "Broward",
-    area: "South Broward",
     grades: "Pre-K4 – 12",
     tuition: "$39,010",
     tuitionNum: 39010,
@@ -39,7 +37,6 @@ const SCHOOLS = [
     name: "North Broward Preparatory School",
     city: "Coconut Creek",
     county: "Broward",
-    area: "North Broward",
     grades: "Pre-K – 12",
     tuition: "$33,600",
     tuitionNum: 33600,
@@ -56,7 +53,6 @@ const SCHOOLS = [
     name: "Sagemont Preparatory School",
     city: "Weston",
     county: "Broward",
-    area: "South Broward",
     grades: "Pre-K – 12",
     tuition: "$28,000",
     tuitionNum: 28000,
@@ -73,7 +69,6 @@ const SCHOOLS = [
     name: "University School of NSU",
     city: "Davie",
     county: "Broward",
-    area: "South Broward",
     grades: "Pre-K – 12",
     tuition: "$30,000",
     tuitionNum: 30000,
@@ -85,30 +80,12 @@ const SCHOOLS = [
     schedule: "~8:00 AM start",
     enrollment: 2000,
   },
-  {
-    id: "david-posnack-jewish",
-    name: "David Posnack Jewish Day School",
-    city: "Davie",
-    county: "Broward",
-    area: "South Broward",
-    grades: "Pre-K – 8",
-    tuition: "$22,000",
-    tuitionNum: 22000,
-    ratio: "10:1",
-    type: "Jewish day school",
-    phone: "(954) 583-6100",
-    website: "https://www.posnackschool.org",
-    features: ["Dual curriculum", "Jewish values", "STEAM focus", "Small community"],
-    schedule: "~8:15 AM start",
-    enrollment: 500,
-  },
   // ── Miami-Dade ─────────────────────────────────────────
   {
     id: "ransom-everglades",
     name: "Ransom Everglades School",
     city: "Coconut Grove",
     county: "Miami-Dade",
-    area: "Miami-Dade",
     grades: "6 – 12",
     tuition: "$48,500",
     tuitionNum: 48500,
@@ -125,7 +102,6 @@ const SCHOOLS = [
     name: "Gulliver Preparatory School",
     city: "Coral Gables / Pinecrest",
     county: "Miami-Dade",
-    area: "Miami-Dade",
     grades: "Pre-K – 12",
     tuition: "$38,000",
     tuitionNum: 38000,
@@ -138,62 +114,10 @@ const SCHOOLS = [
     enrollment: 2200,
   },
   {
-    id: "carrollton-sacred-heart",
-    name: "Carrollton School of the Sacred Heart",
-    city: "Miami",
-    county: "Miami-Dade",
-    area: "Miami-Dade",
-    grades: "Pre-K – 12",
-    tuition: "$35,000",
-    tuitionNum: 35000,
-    ratio: "8:1",
-    type: "Catholic (all-girls)",
-    phone: "(305) 446-5673",
-    website: "https://www.carrollton.org",
-    features: ["All-girls", "Top ranked in Dade", "Sacred Heart network", "College prep"],
-    schedule: "~8:00 AM start",
-    enrollment: 873,
-  },
-  {
-    id: "belen-jesuit",
-    name: "Belen Jesuit Preparatory School",
-    city: "Miami",
-    county: "Miami-Dade",
-    area: "Miami-Dade",
-    grades: "6 – 12",
-    tuition: "$22,000",
-    tuitionNum: 22000,
-    ratio: "15:1",
-    type: "Catholic (all-boys)",
-    phone: "(305) 223-8600",
-    website: "https://www.belenjesuit.org",
-    features: ["All-boys Jesuit", "Strong academics", "Athletics powerhouse", "Affordable for quality"],
-    schedule: "~7:30 AM start",
-    enrollment: 1344,
-  },
-  {
-    id: "palmer-trinity",
-    name: "Palmer Trinity School",
-    city: "Palmetto Bay",
-    county: "Miami-Dade",
-    area: "Miami-Dade",
-    grades: "6 – 12",
-    tuition: "$36,000",
-    tuitionNum: 36000,
-    ratio: "7:1",
-    type: "Episcopal",
-    phone: "(305) 251-2230",
-    website: "https://www.palmertrinity.org",
-    features: ["Episcopal college prep", "34-acre campus", "15 sports", "Strong community"],
-    schedule: "~8:00 AM start",
-    enrollment: 805,
-  },
-  {
     id: "miami-country-day",
     name: "Miami Country Day School",
     city: "Miami",
     county: "Miami-Dade",
-    area: "Miami-Dade",
     grades: "Pre-K – 12",
     tuition: "$40,000",
     tuitionNum: 40000,
@@ -210,7 +134,6 @@ const SCHOOLS = [
     name: "The Cushman School",
     city: "Miami",
     county: "Miami-Dade",
-    area: "Miami-Dade",
     grades: "Pre-K – 8",
     tuition: "$32,000",
     tuitionNum: 32000,
@@ -227,7 +150,6 @@ const SCHOOLS = [
     name: "Riviera Day School",
     city: "Coral Gables",
     county: "Miami-Dade",
-    area: "Miami-Dade",
     grades: "Pre-K – 5",
     tuition: "$24,000",
     tuitionNum: 24000,
@@ -240,28 +162,10 @@ const SCHOOLS = [
     enrollment: 300,
   },
   {
-    id: "st-thomas-episcopal",
-    name: "St. Thomas Episcopal Parish School",
-    city: "Coral Gables",
-    county: "Miami-Dade",
-    area: "Miami-Dade",
-    grades: "Pre-K – 5",
-    tuition: "$25,000",
-    tuitionNum: 25000,
-    ratio: "10:1",
-    type: "Episcopal",
-    phone: "(305) 446-1738",
-    website: "https://www.stthomasparish.org",
-    features: ["Episcopal values", "Coral Gables", "Small community", "Through 5th grade"],
-    schedule: "~8:00 AM start",
-    enrollment: 300,
-  },
-  {
     id: "coconut-grove-montessori",
     name: "Coconut Grove Montessori School",
     city: "Miami",
     county: "Miami-Dade",
-    area: "Miami-Dade",
     grades: "Pre-K – 5",
     tuition: "$22,000",
     tuitionNum: 22000,
@@ -276,8 +180,8 @@ const SCHOOLS = [
 ];
 
 // ── State ────────────────────────────────────────────────
-let schoolStates = {}; // { [schoolId]: { nixed, notes, nixReason, updatedAt } }
-let activeTab = "active"; // "active" | "nixed"
+let schoolStates = {};
+let activeTab = "active";
 let filterCounty = "all";
 let sortBy = "name";
 let searchQuery = "";
@@ -288,7 +192,6 @@ async function loadStates() {
     const res = await fetch("/api/schools");
     if (res.ok) schoolStates = await res.json();
   } catch {
-    // Offline or local dev — use localStorage fallback
     const saved = localStorage.getItem("school_states");
     if (saved) schoolStates = JSON.parse(saved);
   }
@@ -300,19 +203,14 @@ async function saveState(schoolId, update) {
     ...update,
     updatedAt: new Date().toISOString(),
   };
-
-  // Always save to localStorage as backup
   localStorage.setItem("school_states", JSON.stringify(schoolStates));
-
   try {
     await fetch("/api/schools", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ schoolId, ...update }),
     });
-  } catch {
-    // Offline — localStorage has it
-  }
+  } catch {}
 }
 
 // ── Render ───────────────────────────────────────────────
@@ -349,65 +247,55 @@ function getFilteredSchools() {
 }
 
 function renderSchools() {
-  const grid = document.getElementById("school-grid");
+  const tbody = document.getElementById("school-tbody");
   const schools = getFilteredSchools();
 
-  // Update tab counts
   const activeCount = SCHOOLS.filter((s) => !(schoolStates[s.id]?.nixed)).length;
   const nixedCount = SCHOOLS.filter((s) => schoolStates[s.id]?.nixed).length;
   document.getElementById("active-count").textContent = activeCount;
   document.getElementById("nixed-count").textContent = nixedCount;
-
-  // Status bar
   document.getElementById("status-showing").textContent = schools.length;
   document.getElementById("status-total").textContent = SCHOOLS.length;
 
   if (schools.length === 0) {
-    grid.innerHTML = `
-      <div class="empty-state" style="grid-column: 1 / -1">
-        <h3>${activeTab === "nixed" ? "No nixed schools" : "No schools match your filters"}</h3>
-        <p>${activeTab === "nixed" ? "Schools you nix will appear here." : "Try adjusting your filters or search."}</p>
-      </div>`;
+    tbody.innerHTML = `
+      <tr><td colspan="9" class="empty-state">
+        ${activeTab === "nixed" ? "No nixed schools yet." : "No schools match your filters."}
+      </td></tr>`;
     return;
   }
 
-  grid.innerHTML = schools.map((s) => {
+  tbody.innerHTML = schools.map((s) => {
     const state = schoolStates[s.id] || {};
     const isNixed = state.nixed === true;
     const countyClass = s.county === "Miami-Dade" ? "miami-dade" : "broward";
+    const notesSnippet = state.notes ? escapeHtml(state.notes.substring(0, 60)) + (state.notes.length > 60 ? "…" : "") : "";
+    const nixSnippet = state.nixReason ? escapeHtml(state.nixReason.substring(0, 60)) + (state.nixReason.length > 60 ? "…" : "") : "";
 
     return `
-      <div class="school-card ${isNixed ? "nixed" : ""}" data-id="${s.id}">
-        <div class="card-header">
-          <div>
-            <h3>${s.name}</h3>
-            <span style="font-size:0.82rem;color:var(--text-light)">${s.city}</span>
-          </div>
-          <span class="area-badge ${countyClass}">${s.county}</span>
-        </div>
-        <div class="card-body">
-          <div class="detail-row"><span class="label">Grades</span><span class="value">${s.grades}</span></div>
-          <div class="detail-row"><span class="label">Tuition (K)</span><span class="value">${s.tuition}</span></div>
-          <div class="detail-row"><span class="label">Ratio</span><span class="value">${s.ratio}</span></div>
-          <div class="detail-row"><span class="label">Type</span><span class="value">${s.type}</span></div>
-          <div class="detail-row"><span class="label">Enrollment</span><span class="value">${s.enrollment.toLocaleString()}</span></div>
-          <div class="detail-row"><span class="label">Schedule</span><span class="value">${s.schedule}</span></div>
-          <div class="features">
-            ${s.features.map((f) => `<span class="feature-tag">${f}</span>`).join("")}
-          </div>
-        </div>
-        ${state.nixReason ? `<div class="nix-reason">Nixed: ${escapeHtml(state.nixReason)}</div>` : ""}
-        ${state.notes ? `<div class="notes-display"><strong>Notes:</strong> ${escapeHtml(state.notes)}</div>` : ""}
-        <div class="card-footer">
+      <tr class="${isNixed ? "row-nixed" : ""}" data-id="${s.id}">
+        <td class="col-name">
+          <div class="school-name">${s.website ? `<a href="${s.website}" target="_blank" rel="noopener">${s.name}</a>` : s.name}</div>
+          <div class="school-city">${s.city}</div>
+          <div class="school-features">${s.features.map((f) => `<span class="feature-tag">${f}</span>`).join("")}</div>
+          ${nixSnippet ? `<div class="nix-reason">Nixed: ${nixSnippet}</div>` : ""}
+          ${notesSnippet ? `<div class="notes-snippet">Notes: ${notesSnippet}</div>` : ""}
+        </td>
+        <td><span class="area-badge ${countyClass}">${s.county}</span></td>
+        <td>${s.grades}</td>
+        <td class="col-money">${s.tuition}</td>
+        <td>${s.ratio}</td>
+        <td class="col-num">${s.enrollment.toLocaleString()}</td>
+        <td>${s.schedule}</td>
+        <td>${s.phone ? `<a href="tel:${s.phone}" class="phone-link">${s.phone}</a>` : "–"}</td>
+        <td class="col-actions">
           ${isNixed
-            ? `<button class="btn-restore" onclick="restoreSchool('${s.id}')">Restore</button>`
-            : `<button class="btn-nix" onclick="openNixModal('${s.id}')">Nix</button>`
+            ? `<button class="btn-sm btn-restore" onclick="restoreSchool('${s.id}')">Restore</button>`
+            : `<button class="btn-sm btn-nix" onclick="openNixModal('${s.id}')">Nix</button>`
           }
-          <button class="btn-notes" onclick="openNotesModal('${s.id}')">Notes</button>
-          ${s.website ? `<a href="${s.website}" target="_blank" rel="noopener" style="padding:0.4rem 0.8rem;font-size:0.82rem;color:var(--primary-light);text-decoration:none;border:1px solid var(--border);border-radius:6px">Website</a>` : ""}
-          ${s.phone ? `<a href="tel:${s.phone}" style="padding:0.4rem 0.8rem;font-size:0.82rem;color:var(--text-light);text-decoration:none;border:1px solid var(--border);border-radius:6px">${s.phone}</a>` : ""}
-        </div>
-      </div>`;
+          <button class="btn-sm btn-notes" onclick="openNotesModal('${s.id}')">Notes</button>
+        </td>
+      </tr>`;
   }).join("");
 }
 
@@ -499,7 +387,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     renderSchools();
   });
 
-  // Close modals on overlay click
   document.querySelectorAll(".modal-overlay").forEach((overlay) => {
     overlay.addEventListener("click", (e) => {
       if (e.target === overlay) {

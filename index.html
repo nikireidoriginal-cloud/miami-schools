@@ -9,7 +9,7 @@
 <body>
   <header>
     <h1>South Florida Private Schools</h1>
-    <p>South Broward &amp; Miami-Dade County — compare, filter, and track schools</p>
+    <p>South Broward &amp; Miami-Dade County</p>
   </header>
 
   <div class="tabs">
@@ -34,8 +34,8 @@
       <label for="sort-by">Sort by</label>
       <select id="sort-by">
         <option value="name">Name</option>
-        <option value="tuition-asc">Tuition (low → high)</option>
-        <option value="tuition-desc">Tuition (high → low)</option>
+        <option value="tuition-asc">Tuition (low to high)</option>
+        <option value="tuition-desc">Tuition (high to low)</option>
         <option value="enrollment">Enrollment (largest)</option>
         <option value="city">City</option>
       </select>
@@ -50,7 +50,24 @@
     <span>Showing <strong id="status-showing">0</strong> of <strong id="status-total">0</strong> schools</span>
   </div>
 
-  <div class="school-grid" id="school-grid"></div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="col-name">School</th>
+          <th>County</th>
+          <th>Grades</th>
+          <th>Tuition</th>
+          <th>Ratio</th>
+          <th>Size</th>
+          <th>Schedule</th>
+          <th>Phone</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="school-tbody"></tbody>
+    </table>
+  </div>
 
   <!-- Nix Modal -->
   <div class="modal-overlay" id="nix-modal">
