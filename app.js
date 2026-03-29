@@ -445,13 +445,18 @@ function getFilteredSchools() {
   });
 
   list.sort((a, b) => {
+    // Always sort by group number first to keep 1a,1b,1c,1d together and in order
+    const ga = a.group || "zzz";
+    const gb = b.group || "zzz";
+    const groupCmp = ga.localeCompare(gb, undefined, { numeric: true });
+
     switch (sortBy) {
-      case "name": return a.name.localeCompare(b.name);
-      case "tuition-asc": return a.tuitionNum - b.tuitionNum;
-      case "tuition-desc": return b.tuitionNum - a.tuitionNum;
-      case "enrollment": return b.enrollment - a.enrollment;
-      case "city": return a.city.localeCompare(b.city);
-      default: return 0;
+      case "name": return groupCmp;
+      case "tuition-asc": return (a.tuitionNum - b.tuitionNum) || groupCmp;
+      case "tuition-desc": return (b.tuitionNum - a.tuitionNum) || groupCmp;
+      case "enrollment": return (b.enrollment - a.enrollment) || groupCmp;
+      case "city": return a.city.localeCompare(b.city) || groupCmp;
+      default: return groupCmp;
     }
   });
 
