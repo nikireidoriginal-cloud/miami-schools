@@ -99,6 +99,8 @@ const SCHOOLS = [
     city: "Plantation",
     county: "Broward",
     address: "12200 W Broward Blvd, Plantation, FL 33325",
+    lat: 26.1219, lng: -80.2548,
+    group: "1",
     grades: "Pre-K3 – 12",
     tuition: "$33,000",
     tuitionNum: 33000,
@@ -116,6 +118,8 @@ const SCHOOLS = [
     city: "Fort Lauderdale",
     county: "Broward",
     address: "1501 NE 62nd St, Fort Lauderdale, FL 33334",
+    lat: 26.1768, lng: -80.1248,
+    group: "2",
     grades: "Pre-K4 – 12",
     tuition: "$39,010",
     tuitionNum: 39010,
@@ -133,6 +137,8 @@ const SCHOOLS = [
     city: "Coconut Creek",
     county: "Broward",
     address: "7600 Lyons Rd, Coconut Creek, FL 33073",
+    lat: 26.2548, lng: -80.1895,
+    group: "3",
     grades: "Pre-K – 12",
     tuition: "$33,600",
     tuitionNum: 33600,
@@ -150,6 +156,8 @@ const SCHOOLS = [
     city: "Weston",
     county: "Broward",
     address: "1570 Sagemont Way, Weston, FL 33326",
+    lat: 26.1003, lng: -80.3982,
+    group: "4",
     grades: "Pre-K – 12",
     tuition: "$28,000",
     tuitionNum: 28000,
@@ -167,6 +175,8 @@ const SCHOOLS = [
     city: "Davie",
     county: "Broward",
     address: "3375 SW 75th Ave, Fort Lauderdale, FL 33314",
+    lat: 26.0784, lng: -80.2408,
+    group: "5",
     grades: "Pre-K – 12",
     tuition: "$30,000",
     tuitionNum: 30000,
@@ -185,6 +195,8 @@ const SCHOOLS = [
     city: "Miami",
     county: "Miami-Dade",
     address: "6050 SW 57th Ave, Miami, FL 33143",
+    lat: 25.7058, lng: -80.2871,
+    group: "6a",
     grades: "Pre-K – 5",
     tuition: "$18,000",
     tuitionNum: 18000,
@@ -202,6 +214,8 @@ const SCHOOLS = [
     city: "Miami",
     county: "Miami-Dade",
     address: "14850 SW 67th Ave, Miami, FL 33158",
+    lat: 25.6275, lng: -80.3115,
+    group: "6b",
     grades: "Pre-K – 5",
     tuition: "$18,000",
     tuitionNum: 18000,
@@ -219,6 +233,8 @@ const SCHOOLS = [
     city: "Miami",
     county: "Miami-Dade",
     address: "14400 Old Cutler Rd, Miami, FL 33158",
+    lat: 25.6310, lng: -80.2983,
+    group: "6c",
     grades: "Pre-K – 5",
     tuition: "$18,000",
     tuitionNum: 18000,
@@ -236,6 +252,8 @@ const SCHOOLS = [
     city: "Palmetto Bay",
     county: "Miami-Dade",
     address: "17800 Old Cutler Rd, Miami, FL 33157",
+    lat: 25.5980, lng: -80.2942,
+    group: "6d",
     grades: "Pre-K – 5",
     tuition: "$18,000",
     tuitionNum: 18000,
@@ -253,6 +271,8 @@ const SCHOOLS = [
     city: "Miami",
     county: "Miami-Dade",
     address: "9385 SW 79th Ave, Miami, FL 33156",
+    lat: 25.6886, lng: -80.3133,
+    group: "7",
     grades: "Pre-K – 6",
     tuition: "$25,000",
     tuitionNum: 25000,
@@ -270,6 +290,8 @@ const SCHOOLS = [
     city: "Coral Gables / Pinecrest",
     county: "Miami-Dade",
     address: "12595 Red Rd, Coral Gables, FL 33156",
+    lat: 25.6692, lng: -80.2871,
+    group: "8",
     grades: "Pre-K – 12",
     tuition: "$38,000",
     tuitionNum: 38000,
@@ -287,6 +309,8 @@ const SCHOOLS = [
     city: "Miami",
     county: "Miami-Dade",
     address: "601 NE 107th St, Miami, FL 33161",
+    lat: 25.8539, lng: -80.1862,
+    group: "9",
     grades: "Pre-K – 12",
     tuition: "$40,000",
     tuitionNum: 40000,
@@ -304,6 +328,8 @@ const SCHOOLS = [
     city: "Miami",
     county: "Miami-Dade",
     address: "592 NE 60th St, Miami, FL 33137",
+    lat: 25.8173, lng: -80.1874,
+    group: "10",
     grades: "Pre-K – 8",
     tuition: "$32,000",
     tuitionNum: 32000,
@@ -321,6 +347,8 @@ const SCHOOLS = [
     city: "Coral Gables",
     county: "Miami-Dade",
     address: "6800 Nervia St, Coral Gables, FL 33146",
+    lat: 25.7218, lng: -80.2652,
+    group: "11",
     grades: "Pre-K – 5",
     tuition: "$24,000",
     tuitionNum: 24000,
@@ -338,6 +366,8 @@ const SCHOOLS = [
     city: "Miami",
     county: "Miami-Dade",
     address: "2850 SW 27th Ave, Coconut Grove, FL 33133",
+    lat: 25.7308, lng: -80.2382,
+    group: "12",
     grades: "Pre-K – 5",
     tuition: "$22,000",
     tuitionNum: 22000,
@@ -432,7 +462,7 @@ function renderSchools() {
 
   if (schools.length === 0) {
     tbody.innerHTML = `
-      <tr><td colspan="11" class="empty-state">
+      <tr><td colspan="12" class="empty-state">
         ${activeTab === "nixed" ? "No nixed schools yet." : "No schools match your filters."}
       </td></tr>`;
     return;
@@ -450,6 +480,7 @@ function renderSchools() {
 
     return `
       <tr class="${isNixed ? "row-nixed" : ""}" data-id="${s.id}">
+        <td class="col-group-num">${s.group || "–"}</td>
         <td class="col-name">
           <div class="school-name">${s.website ? `<a href="${s.website}" target="_blank" rel="noopener">${s.name}</a>` : s.name}</div>
           <div class="school-city">${s.city}</div>
@@ -476,6 +507,8 @@ function renderSchools() {
         </td>
       </tr>`;
   }).join("");
+
+  renderMapMarkers();
 }
 
 function escapeHtml(str) {
@@ -551,6 +584,65 @@ async function restoreSchool(schoolId) {
   renderSchools();
 }
 
+// ── Map ─────────────────────────────────────────────────
+let map = null;
+let mapMarkers = [];
+
+function initMap() {
+  map = L.map("school-map").setView([25.85, -80.25], 10);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    maxZoom: 18,
+  }).addTo(map);
+  renderMapMarkers();
+}
+
+function renderMapMarkers() {
+  if (!map) return;
+  mapMarkers.forEach((m) => map.removeLayer(m));
+  mapMarkers = [];
+
+  const schools = getFilteredSchools();
+  const bounds = [];
+
+  schools.forEach((s) => {
+    if (!s.lat || !s.lng) return;
+    const state = schoolStates[s.id] || {};
+    const label = s.group || "?";
+    const icon = L.divIcon({
+      className: "map-marker-icon",
+      html: `<div class="marker-label">${label}</div>`,
+      iconSize: [28, 28],
+      iconAnchor: [14, 14],
+    });
+    const marker = L.marker([s.lat, s.lng], { icon }).addTo(map);
+    marker.bindPopup(
+      `<strong>${label}.</strong> ${s.name}<br>` +
+      `<span style="font-size:0.85em;color:#666">${s.address || s.city}</span><br>` +
+      `<span style="font-size:0.85em">${s.tuition} · ${s.grades}</span>`
+    );
+    mapMarkers.push(marker);
+    bounds.push([s.lat, s.lng]);
+  });
+
+  if (bounds.length > 0) {
+    map.fitBounds(bounds, { padding: [30, 30] });
+  }
+}
+
+function toggleMap() {
+  const mapEl = document.getElementById("school-map");
+  const btn = document.getElementById("toggle-map");
+  if (mapEl.style.display === "none") {
+    mapEl.style.display = "block";
+    btn.textContent = "Hide Map";
+    setTimeout(() => map.invalidateSize(), 100);
+  } else {
+    mapEl.style.display = "none";
+    btn.textContent = "Show Map";
+  }
+}
+
 // ── Event Listeners ──────────────────────────────────────
 document.addEventListener("DOMContentLoaded", async () => {
   await Promise.all([loadStates(), loadCustomSchoolsFromAPI()]);
@@ -588,5 +680,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   });
 
+  initMap();
   renderSchools();
 });

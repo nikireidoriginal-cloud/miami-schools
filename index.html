@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>South Florida Private Schools</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
 <body>
   <header>
@@ -53,10 +55,19 @@
     <span>Showing <strong id="status-showing">0</strong> of <strong id="status-total">0</strong> schools</span>
   </div>
 
+  <div id="map-container">
+    <div class="map-header">
+      <h3>School Locations</h3>
+      <button class="btn-toggle-map" id="toggle-map" onclick="toggleMap()">Hide Map</button>
+    </div>
+    <div id="school-map"></div>
+  </div>
+
   <div class="table-wrap">
     <table>
       <thead>
         <tr>
+          <th class="col-num-label">#</th>
           <th class="col-name">School</th>
           <th>County</th>
           <th>Address</th>
