@@ -232,6 +232,20 @@ tbody td {
   padding: 0.15rem 0.45rem !important;
 }
 
+.col-address {
+  white-space: normal;
+  min-width: 160px;
+  max-width: 220px;
+}
+
+.address-link {
+  color: var(--primary-light);
+  text-decoration: none;
+  font-size: 0.82rem;
+}
+
+.address-link:hover { text-decoration: underline; }
+
 .col-money { font-weight: 600; }
 .col-num { text-align: right; }
 

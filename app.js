@@ -37,6 +37,7 @@ function getAllSchools() {
 function openAddSchoolModal() {
   document.getElementById("add-school-name").value = "";
   document.getElementById("add-school-city").value = "";
+  document.getElementById("add-school-address").value = "";
   document.getElementById("add-school-county").value = "Miami-Dade";
   document.getElementById("add-school-grades").value = "";
   document.getElementById("add-school-tuition").value = "";
@@ -68,6 +69,7 @@ function confirmAddSchool() {
     id: "custom-" + Date.now(),
     name,
     city: document.getElementById("add-school-city").value.trim() || "–",
+    address: document.getElementById("add-school-address").value.trim(),
     county: document.getElementById("add-school-county").value,
     area: document.getElementById("add-school-county").value,
     grades: document.getElementById("add-school-grades").value.trim() || "–",
@@ -96,6 +98,7 @@ const SCHOOLS = [
     name: "American Heritage School - Broward",
     city: "Plantation",
     county: "Broward",
+    address: "12200 W Broward Blvd, Plantation, FL 33325",
     grades: "Pre-K3 – 12",
     tuition: "$33,000",
     tuitionNum: 33000,
@@ -112,6 +115,7 @@ const SCHOOLS = [
     name: "Pine Crest School - Fort Lauderdale",
     city: "Fort Lauderdale",
     county: "Broward",
+    address: "1501 NE 62nd St, Fort Lauderdale, FL 33334",
     grades: "Pre-K4 – 12",
     tuition: "$39,010",
     tuitionNum: 39010,
@@ -128,6 +132,7 @@ const SCHOOLS = [
     name: "North Broward Preparatory School",
     city: "Coconut Creek",
     county: "Broward",
+    address: "7600 Lyons Rd, Coconut Creek, FL 33073",
     grades: "Pre-K – 12",
     tuition: "$33,600",
     tuitionNum: 33600,
@@ -144,6 +149,7 @@ const SCHOOLS = [
     name: "Sagemont Preparatory School",
     city: "Weston",
     county: "Broward",
+    address: "1570 Sagemont Way, Weston, FL 33326",
     grades: "Pre-K – 12",
     tuition: "$28,000",
     tuitionNum: 28000,
@@ -160,6 +166,7 @@ const SCHOOLS = [
     name: "University School of NSU",
     city: "Davie",
     county: "Broward",
+    address: "3375 SW 75th Ave, Fort Lauderdale, FL 33314",
     grades: "Pre-K – 12",
     tuition: "$30,000",
     tuitionNum: 30000,
@@ -177,6 +184,7 @@ const SCHOOLS = [
     name: "Alexander Montessori School",
     city: "Miami",
     county: "Miami-Dade",
+    address: "6050 SW 57th Ave, Miami, FL 33143",
     grades: "Pre-K – 5",
     tuition: "$18,000",
     tuitionNum: 18000,
@@ -193,6 +201,7 @@ const SCHOOLS = [
     name: "Cattoira Montessori School",
     city: "Miami",
     county: "Miami-Dade",
+    address: "9385 SW 79th Ave, Miami, FL 33156",
     grades: "Pre-K – 6",
     tuition: "$25,000",
     tuitionNum: 25000,
@@ -209,6 +218,7 @@ const SCHOOLS = [
     name: "Gulliver Preparatory School",
     city: "Coral Gables / Pinecrest",
     county: "Miami-Dade",
+    address: "12595 Red Rd, Coral Gables, FL 33156",
     grades: "Pre-K – 12",
     tuition: "$38,000",
     tuitionNum: 38000,
@@ -225,6 +235,7 @@ const SCHOOLS = [
     name: "Miami Country Day School",
     city: "Miami",
     county: "Miami-Dade",
+    address: "601 NE 107th St, Miami, FL 33161",
     grades: "Pre-K – 12",
     tuition: "$40,000",
     tuitionNum: 40000,
@@ -241,6 +252,7 @@ const SCHOOLS = [
     name: "The Cushman School",
     city: "Miami",
     county: "Miami-Dade",
+    address: "592 NE 60th St, Miami, FL 33137",
     grades: "Pre-K – 8",
     tuition: "$32,000",
     tuitionNum: 32000,
@@ -257,6 +269,7 @@ const SCHOOLS = [
     name: "Riviera Day School",
     city: "Coral Gables",
     county: "Miami-Dade",
+    address: "6800 Nervia St, Coral Gables, FL 33146",
     grades: "Pre-K – 5",
     tuition: "$24,000",
     tuitionNum: 24000,
@@ -273,6 +286,7 @@ const SCHOOLS = [
     name: "Coconut Grove Montessori School",
     city: "Miami",
     county: "Miami-Dade",
+    address: "2850 SW 27th Ave, Coconut Grove, FL 33133",
     grades: "Pre-K – 5",
     tuition: "$22,000",
     tuitionNum: 22000,
@@ -367,7 +381,7 @@ function renderSchools() {
 
   if (schools.length === 0) {
     tbody.innerHTML = `
-      <tr><td colspan="10" class="empty-state">
+      <tr><td colspan="11" class="empty-state">
         ${activeTab === "nixed" ? "No nixed schools yet." : "No schools match your filters."}
       </td></tr>`;
     return;
@@ -392,6 +406,7 @@ function renderSchools() {
           ${nixSnippet ? `<div class="nix-reason">Nixed: ${nixSnippet}${nixMeta}</div>` : ""}
         </td>
         <td><span class="area-badge ${countyClass}">${s.county}</span></td>
+        <td class="col-address">${s.address ? `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.address)}" target="_blank" rel="noopener" class="address-link">${s.address}</a>` : "–"}</td>
         <td>${s.grades}</td>
         <td class="col-money">${s.tuition}</td>
         <td>${s.ratio}</td>
