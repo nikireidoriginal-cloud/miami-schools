@@ -81,6 +81,20 @@ header p { opacity: 0.8; font-size: 0.85rem; margin-top: 0.15rem; }
 }
 
 .controls select { min-width: 140px; }
+
+.btn-add-school {
+  padding: 0.4rem 1rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-add-school:hover { background: var(--primary-light); }
 .controls input[type="text"] { flex: 1; min-width: 180px; }
 .controls label { font-size: 0.8rem; color: var(--text-light); font-weight: 500; }
 
@@ -187,10 +201,35 @@ tbody td {
   margin-top: 0.25rem;
 }
 
-.notes-snippet {
-  font-size: 0.78rem;
+.nix-meta {
+  display: block;
+  font-size: 0.72rem;
   color: var(--text-light);
-  margin-top: 0.15rem;
+  font-style: normal;
+  margin-top: 0.1rem;
+}
+
+.col-notes {
+  min-width: 180px;
+  max-width: 280px;
+  white-space: normal;
+}
+
+.notes-cell {
+  font-size: 0.82rem;
+  color: var(--text);
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.notes-cell .no-notes {
+  color: var(--text-light);
+}
+
+.btn-edit-notes {
+  margin-top: 0.3rem;
+  font-size: 0.72rem !important;
+  padding: 0.15rem 0.45rem !important;
 }
 
 .col-money { font-weight: 600; }
@@ -297,6 +336,21 @@ tbody td {
   margin-bottom: 0.4rem;
 }
 
+.modal-body input[type="text"] {
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-family: inherit;
+}
+
+.modal-body input[type="text"]:focus {
+  outline: none;
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 2px rgba(43, 108, 176, 0.1);
+}
+
 .modal-body textarea {
   width: 100%;
   min-height: 90px;
@@ -315,6 +369,26 @@ tbody td {
 }
 
 .required { color: var(--danger); }
+
+.add-school-form label { margin-top: 0.6rem; }
+.add-school-form label:first-child { margin-top: 0; }
+
+.add-school-form input,
+.add-school-form select {
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-family: inherit;
+}
+
+.add-school-form input:focus,
+.add-school-form select:focus {
+  outline: none;
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 2px rgba(43, 108, 176, 0.1);
+}
 
 .error-msg {
   color: var(--danger);

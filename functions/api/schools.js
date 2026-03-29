@@ -11,7 +11,7 @@ export async function onRequestGet(context) {
 export async function onRequestPut(context) {
   const { env } = context;
   const body = await context.request.json();
-  const { schoolId, nixed, notes, nixReason } = body;
+  const { schoolId, nixed, notes, nixReason, nixedBy, nixedAt } = body;
 
   if (!schoolId) {
     return Response.json({ error: "schoolId required" }, { status: 400 });
@@ -25,6 +25,8 @@ export async function onRequestPut(context) {
     nixed: nixed ?? data[schoolId]?.nixed ?? false,
     notes: notes ?? data[schoolId]?.notes ?? "",
     nixReason: nixReason ?? data[schoolId]?.nixReason ?? "",
+    nixedBy: nixedBy ?? data[schoolId]?.nixedBy ?? "",
+    nixedAt: nixedAt ?? data[schoolId]?.nixedAt ?? "",
     updatedAt: new Date().toISOString(),
   };
 

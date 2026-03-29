@@ -44,6 +44,9 @@
       <label for="search">Search</label>
       <input type="text" id="search" placeholder="Search schools, cities, types…">
     </div>
+    <div>
+      <button class="btn-add-school" onclick="openAddSchoolModal()">+ Add School</button>
+    </div>
   </div>
 
   <div class="status-bar">
@@ -62,6 +65,7 @@
           <th>Size</th>
           <th>Schedule</th>
           <th>Phone</th>
+          <th class="col-notes">Notes</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -77,7 +81,10 @@
         <button class="modal-close" onclick="closeNixModal()">&times;</button>
       </div>
       <div class="modal-body">
-        <label for="nix-reason">Reason for nixing <span class="required">*</span></label>
+        <label for="nix-by">Your name <span class="required">*</span></label>
+        <input type="text" id="nix-by" placeholder="Who is nixing this school?">
+        <div class="error-msg" id="nix-name-error">Your name is required.</div>
+        <label for="nix-reason" style="margin-top:0.6rem">Reason for nixing <span class="required">*</span></label>
         <textarea id="nix-reason" placeholder="Why are you removing this school from consideration?"></textarea>
         <div class="error-msg" id="nix-error">A reason is required to nix a school.</div>
       </div>
@@ -102,6 +109,55 @@
       <div class="modal-footer">
         <button class="btn-cancel" onclick="closeNotesModal()">Cancel</button>
         <button class="btn-confirm" onclick="saveNotes()">Save Notes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add School Modal -->
+  <div class="modal-overlay" id="add-school-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Add School</h3>
+        <button class="modal-close" onclick="closeAddSchoolModal()">&times;</button>
+      </div>
+      <div class="modal-body add-school-form">
+        <label for="add-school-name">School Name <span class="required">*</span></label>
+        <input type="text" id="add-school-name" placeholder="School name">
+        <div class="error-msg" id="add-school-error">School name is required.</div>
+
+        <label for="add-school-city">City</label>
+        <input type="text" id="add-school-city" placeholder="City">
+
+        <label for="add-school-county">County</label>
+        <select id="add-school-county">
+          <option value="Miami-Dade">Miami-Dade</option>
+          <option value="Broward">Broward</option>
+        </select>
+
+        <label for="add-school-grades">Grades</label>
+        <input type="text" id="add-school-grades" placeholder="e.g. Pre-K – 5">
+
+        <label for="add-school-tuition">Tuition</label>
+        <input type="text" id="add-school-tuition" placeholder="e.g. 25000">
+
+        <label for="add-school-ratio">Student-Teacher Ratio</label>
+        <input type="text" id="add-school-ratio" placeholder="e.g. 10:1">
+
+        <label for="add-school-type">Type</label>
+        <input type="text" id="add-school-type" placeholder="e.g. Montessori, Non-sectarian">
+
+        <label for="add-school-phone">Phone</label>
+        <input type="text" id="add-school-phone" placeholder="(305) 555-1234">
+
+        <label for="add-school-website">Website</label>
+        <input type="text" id="add-school-website" placeholder="https://...">
+
+        <label for="add-school-schedule">Schedule</label>
+        <input type="text" id="add-school-schedule" placeholder="e.g. 8:00 AM – 3:00 PM">
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" onclick="closeAddSchoolModal()">Cancel</button>
+        <button class="btn-confirm" onclick="confirmAddSchool()">Add School</button>
       </div>
     </div>
   </div>

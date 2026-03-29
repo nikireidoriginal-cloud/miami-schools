@@ -1,3 +1,94 @@
+let customSchools = [];
+
+function loadCustomSchools() {
+  try {
+    const saved = localStorage.getItem("custom_schools");
+    if (saved) customSchools = JSON.parse(saved);
+  } catch {}
+}
+
+function saveCustomSchools() {
+  localStorage.setItem("custom_schools", JSON.stringify(customSchools));
+  try {
+    fetch("/api/custom-schools", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(customSchools),
+    });
+  } catch {}
+}
+
+async function loadCustomSchoolsFromAPI() {
+  try {
+    const res = await fetch("/api/custom-schools");
+    if (res.ok) {
+      customSchools = await res.json();
+      localStorage.setItem("custom_schools", JSON.stringify(customSchools));
+    }
+  } catch {
+    loadCustomSchools();
+  }
+}
+
+function getAllSchools() {
+  return [...SCHOOLS, ...customSchools];
+}
+
+function openAddSchoolModal() {
+  document.getElementById("add-school-name").value = "";
+  document.getElementById("add-school-city").value = "";
+  document.getElementById("add-school-county").value = "Miami-Dade";
+  document.getElementById("add-school-grades").value = "";
+  document.getElementById("add-school-tuition").value = "";
+  document.getElementById("add-school-ratio").value = "";
+  document.getElementById("add-school-type").value = "";
+  document.getElementById("add-school-phone").value = "";
+  document.getElementById("add-school-website").value = "";
+  document.getElementById("add-school-schedule").value = "";
+  document.getElementById("add-school-error").style.display = "none";
+  document.getElementById("add-school-modal").classList.add("active");
+}
+
+function closeAddSchoolModal() {
+  document.getElementById("add-school-modal").classList.remove("active");
+}
+
+function confirmAddSchool() {
+  const name = document.getElementById("add-school-name").value.trim();
+  if (!name) {
+    document.getElementById("add-school-error").style.display = "block";
+    return;
+  }
+
+  const tuitionRaw = document.getElementById("add-school-tuition").value.trim();
+  const tuitionNum = parseInt(tuitionRaw.replace(/[^0-9]/g, ""), 10) || 0;
+  const tuition = tuitionNum ? `$${tuitionNum.toLocaleString()}` : "–";
+
+  const school = {
+    id: "custom-" + Date.now(),
+    name,
+    city: document.getElementById("add-school-city").value.trim() || "–",
+    county: document.getElementById("add-school-county").value,
+    area: document.getElementById("add-school-county").value,
+    grades: document.getElementById("add-school-grades").value.trim() || "–",
+    tuition,
+    tuitionNum,
+    ratio: document.getElementById("add-school-ratio").value.trim() || "–",
+    type: document.getElementById("add-school-type").value.trim() || "–",
+    phone: document.getElementById("add-school-phone").value.trim(),
+    website: document.getElementById("add-school-website").value.trim(),
+    features: [],
+    schedule: document.getElementById("add-school-schedule").value.trim() || "–",
+    enrollment: 0,
+    custom: true,
+  };
+
+  customSchools.push(school);
+  saveCustomSchools();
+  closeAddSchoolModal();
+  renderSchools();
+}
+
 const SCHOOLS = [
   // ── South Broward ──────────────────────────────────────
   {
@@ -231,7 +322,7 @@ async function saveState(schoolId, update) {
 
 // ── Render ───────────────────────────────────────────────
 function getFilteredSchools() {
-  let list = SCHOOLS.filter((s) => {
+  let list = getAllSchools().filter((s) => {
     const state = schoolStates[s.id] || {};
     const isNixed = state.nixed === true;
     if (activeTab === "active" && isNixed) return false;
@@ -266,16 +357,17 @@ function renderSchools() {
   const tbody = document.getElementById("school-tbody");
   const schools = getFilteredSchools();
 
-  const activeCount = SCHOOLS.filter((s) => !(schoolStates[s.id]?.nixed)).length;
-  const nixedCount = SCHOOLS.filter((s) => schoolStates[s.id]?.nixed).length;
+  const all = getAllSchools();
+  const activeCount = all.filter((s) => !(schoolStates[s.id]?.nixed)).length;
+  const nixedCount = all.filter((s) => schoolStates[s.id]?.nixed).length;
   document.getElementById("active-count").textContent = activeCount;
   document.getElementById("nixed-count").textContent = nixedCount;
   document.getElementById("status-showing").textContent = schools.length;
-  document.getElementById("status-total").textContent = SCHOOLS.length;
+  document.getElementById("status-total").textContent = all.length;
 
   if (schools.length === 0) {
     tbody.innerHTML = `
-      <tr><td colspan="9" class="empty-state">
+      <tr><td colspan="10" class="empty-state">
         ${activeTab === "nixed" ? "No nixed schools yet." : "No schools match your filters."}
       </td></tr>`;
     return;
@@ -285,8 +377,11 @@ function renderSchools() {
     const state = schoolStates[s.id] || {};
     const isNixed = state.nixed === true;
     const countyClass = s.county === "Miami-Dade" ? "miami-dade" : "broward";
-    const notesSnippet = state.notes ? escapeHtml(state.notes.substring(0, 60)) + (state.notes.length > 60 ? "…" : "") : "";
-    const nixSnippet = state.nixReason ? escapeHtml(state.nixReason.substring(0, 60)) + (state.nixReason.length > 60 ? "…" : "") : "";
+    const nixSnippet = state.nixReason ? escapeHtml(state.nixReason) : "";
+    const nixMeta = state.nixedAt
+      ? `<span class="nix-meta">${state.nixedBy ? escapeHtml(state.nixedBy) + " · " : ""}${new Date(state.nixedAt).toLocaleDateString()}</span>`
+      : "";
+    const notesText = state.notes ? escapeHtml(state.notes) : "";
 
     return `
       <tr class="${isNixed ? "row-nixed" : ""}" data-id="${s.id}">
@@ -294,8 +389,7 @@ function renderSchools() {
           <div class="school-name">${s.website ? `<a href="${s.website}" target="_blank" rel="noopener">${s.name}</a>` : s.name}</div>
           <div class="school-city">${s.city}</div>
           <div class="school-features">${s.features.map((f) => `<span class="feature-tag">${f}</span>`).join("")}</div>
-          ${nixSnippet ? `<div class="nix-reason">Nixed: ${nixSnippet}</div>` : ""}
-          ${notesSnippet ? `<div class="notes-snippet">Notes: ${notesSnippet}</div>` : ""}
+          ${nixSnippet ? `<div class="nix-reason">Nixed: ${nixSnippet}${nixMeta}</div>` : ""}
         </td>
         <td><span class="area-badge ${countyClass}">${s.county}</span></td>
         <td>${s.grades}</td>
@@ -304,12 +398,15 @@ function renderSchools() {
         <td class="col-num">${s.enrollment.toLocaleString()}</td>
         <td>${s.schedule}</td>
         <td>${s.phone ? `<a href="tel:${s.phone}" class="phone-link">${s.phone}</a>` : "–"}</td>
+        <td class="col-notes">
+          <div class="notes-cell">${notesText || `<span class="no-notes">–</span>`}</div>
+          <button class="btn-sm btn-notes btn-edit-notes" onclick="openNotesModal('${s.id}')">${notesText ? "Edit" : "Add"}</button>
+        </td>
         <td class="col-actions">
           ${isNixed
             ? `<button class="btn-sm btn-restore" onclick="restoreSchool('${s.id}')">Restore</button>`
             : `<button class="btn-sm btn-nix" onclick="openNixModal('${s.id}')">Nix</button>`
           }
-          <button class="btn-sm btn-notes" onclick="openNotesModal('${s.id}')">Notes</button>
         </td>
       </tr>`;
   }).join("");
@@ -326,10 +423,12 @@ let currentModalSchoolId = null;
 
 function openNixModal(schoolId) {
   currentModalSchoolId = schoolId;
-  const school = SCHOOLS.find((s) => s.id === schoolId);
+  const school = getAllSchools().find((s) => s.id === schoolId);
   document.getElementById("nix-modal-title").textContent = `Nix: ${school.name}`;
   document.getElementById("nix-reason").value = "";
+  document.getElementById("nix-by").value = localStorage.getItem("user_name") || "";
   document.getElementById("nix-error").style.display = "none";
+  document.getElementById("nix-name-error").style.display = "none";
   document.getElementById("nix-modal").classList.add("active");
 }
 
@@ -340,18 +439,29 @@ function closeNixModal() {
 
 async function confirmNix() {
   const reason = document.getElementById("nix-reason").value.trim();
+  const nixedBy = document.getElementById("nix-by").value.trim();
   if (!reason) {
     document.getElementById("nix-error").style.display = "block";
     return;
   }
-  await saveState(currentModalSchoolId, { nixed: true, nixReason: reason });
+  if (!nixedBy) {
+    document.getElementById("nix-name-error").style.display = "block";
+    return;
+  }
+  localStorage.setItem("user_name", nixedBy);
+  await saveState(currentModalSchoolId, {
+    nixed: true,
+    nixReason: reason,
+    nixedBy,
+    nixedAt: new Date().toISOString(),
+  });
   closeNixModal();
   renderSchools();
 }
 
 function openNotesModal(schoolId) {
   currentModalSchoolId = schoolId;
-  const school = SCHOOLS.find((s) => s.id === schoolId);
+  const school = getAllSchools().find((s) => s.id === schoolId);
   const state = schoolStates[schoolId] || {};
   document.getElementById("notes-modal-title").textContent = `Notes: ${school.name}`;
   document.getElementById("school-notes").value = state.notes || "";
@@ -377,7 +487,7 @@ async function restoreSchool(schoolId) {
 
 // ── Event Listeners ──────────────────────────────────────
 document.addEventListener("DOMContentLoaded", async () => {
-  await loadStates();
+  await Promise.all([loadStates(), loadCustomSchoolsFromAPI()]);
 
   document.querySelectorAll(".tab").forEach((tab) => {
     tab.addEventListener("click", () => {
