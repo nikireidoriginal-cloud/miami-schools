@@ -31,7 +31,26 @@ async function loadCustomSchoolsFromAPI() {
 }
 
 function getAllSchools() {
+  // Flatten: for counting/filtering, include parent schools (not children individually)
   return [...SCHOOLS, ...customSchools];
+}
+
+function getAllSchoolsForMap() {
+  // For map markers, expand parents into their children with location data
+  const result = [];
+  for (const s of [...SCHOOLS, ...customSchools]) {
+    if (s.children) {
+      s.children.forEach((c) => result.push({ ...s, ...c, children: undefined }));
+    } else {
+      result.push(s);
+    }
+  }
+  return result;
+}
+
+function toggleParent(parentId) {
+  expandedParents[parentId] = !expandedParents[parentId];
+  renderSchools();
 }
 
 function openAddSchoolModal() {
@@ -92,15 +111,14 @@ function confirmAddSchool() {
 }
 
 const SCHOOLS = [
-  // 1a–d. Alexander Montessori (4 campuses)
+  // 1. Alexander Montessori (parent with 4 campuses)
   {
-    id: "alexander-montessori-red-road",
-    name: "Alexander Montessori - Red Road",
-    city: "Miami",
+    id: "alexander-montessori",
+    name: "Alexander Montessori School",
+    city: "Miami / Palmetto Bay",
     county: "Miami-Dade",
-    address: "6050 SW 57th Ave, Miami, FL 33143",
-    lat: 25.7058, lng: -80.2871,
-    group: "1a",
+    address: "",
+    group: "1",
     grades: "Pre-K – 5",
     tuition: "$18,000",
     tuitionNum: 18000,
@@ -111,63 +129,40 @@ const SCHOOLS = [
     features: ["Est. 1963", "Authentic Montessori", "Summer program"],
     schedule: "~8:30 AM start",
     enrollment: 440,
-  },
-  {
-    id: "alexander-montessori-ludlam",
-    name: "Alexander Montessori - Ludlam Rd",
-    city: "Miami",
-    county: "Miami-Dade",
-    address: "14850 SW 67th Ave, Miami, FL 33158",
-    lat: 25.6275, lng: -80.3115,
-    group: "1b",
-    grades: "Pre-K – 5",
-    tuition: "$18,000",
-    tuitionNum: 18000,
-    ratio: "14:1",
-    type: "Montessori",
-    phone: "(305) 665-6274",
-    website: "https://www.alexandermontessori.com",
-    features: ["Est. 1963", "Authentic Montessori", "Summer program"],
-    schedule: "~8:30 AM start",
-    enrollment: 440,
-  },
-  {
-    id: "alexander-montessori-old-cutler",
-    name: "Alexander Montessori - Old Cutler Rd",
-    city: "Miami",
-    county: "Miami-Dade",
-    address: "14400 Old Cutler Rd, Miami, FL 33158",
-    lat: 25.6310, lng: -80.2983,
-    group: "1c",
-    grades: "Pre-K – 5",
-    tuition: "$18,000",
-    tuitionNum: 18000,
-    ratio: "14:1",
-    type: "Montessori",
-    phone: "(305) 665-6274",
-    website: "https://www.alexandermontessori.com",
-    features: ["Est. 1963", "Authentic Montessori", "Summer program"],
-    schedule: "~8:30 AM start",
-    enrollment: 440,
-  },
-  {
-    id: "alexander-montessori-palmetto-bay",
-    name: "Alexander Montessori - Palmetto Bay",
-    city: "Palmetto Bay",
-    county: "Miami-Dade",
-    address: "17800 Old Cutler Rd, Miami, FL 33157",
-    lat: 25.5980, lng: -80.2942,
-    group: "1d",
-    grades: "Pre-K – 5",
-    tuition: "$18,000",
-    tuitionNum: 18000,
-    ratio: "14:1",
-    type: "Montessori",
-    phone: "(305) 665-6274",
-    website: "https://www.alexandermontessori.com",
-    features: ["Est. 1963", "Authentic Montessori", "Summer program"],
-    schedule: "~8:30 AM start",
-    enrollment: 440,
+    children: [
+      {
+        id: "alexander-montessori-red-road",
+        name: "Red Road Campus",
+        city: "Miami",
+        address: "6050 SW 57th Ave, Miami, FL 33143",
+        lat: 25.7058, lng: -80.2871,
+        phone: "(305) 665-6274",
+      },
+      {
+        id: "alexander-montessori-ludlam",
+        name: "Ludlam Rd Campus",
+        city: "Miami",
+        address: "14850 SW 67th Ave, Miami, FL 33158",
+        lat: 25.6275, lng: -80.3115,
+        phone: "(305) 665-6274",
+      },
+      {
+        id: "alexander-montessori-old-cutler",
+        name: "Old Cutler Rd Campus",
+        city: "Miami",
+        address: "14400 Old Cutler Rd, Miami, FL 33158",
+        lat: 25.6310, lng: -80.2983,
+        phone: "(305) 665-6274",
+      },
+      {
+        id: "alexander-montessori-palmetto-bay",
+        name: "Palmetto Bay Campus",
+        city: "Palmetto Bay",
+        address: "17800 Old Cutler Rd, Miami, FL 33157",
+        lat: 25.5980, lng: -80.2942,
+        phone: "(305) 665-6274",
+      },
+    ],
   },
   // 2. American Heritage
   {
@@ -263,7 +258,7 @@ const SCHOOLS = [
     tuitionNum: 38000,
     ratio: "10:1",
     type: "Non-sectarian",
-    phone: "(305) 666-7937",
+    phone: "(305) 666-6333",
     website: "https://www.gulliverprep.org",
     features: ["Three campuses", "Full K-12", "Strong athletics", "AP & Honors"],
     schedule: "~8:00 AM start",
@@ -283,7 +278,7 @@ const SCHOOLS = [
     tuitionNum: 40000,
     ratio: "8:1",
     type: "Non-sectarian",
-    phone: "(305) 759-2843",
+    phone: "(305) 779-7200",
     website: "https://www.miamicountryday.org",
     features: ["Full K-12", "Diverse community", "Strong arts & athletics", "College prep"],
     schedule: "~8:00 AM start",
@@ -303,7 +298,7 @@ const SCHOOLS = [
     tuitionNum: 33600,
     ratio: "17:1",
     type: "Non-sectarian",
-    phone: "",
+    phone: "(954) 247-0011",
     website: "https://www.nordangliaeducation.com/nbps-florida",
     features: ["IB program", "Day & boarding", "International curriculum", "VPK"],
     schedule: "~8:00 AM start",
@@ -323,7 +318,7 @@ const SCHOOLS = [
     tuitionNum: 39010,
     ratio: "Small classes",
     type: "Non-sectarian",
-    phone: "(561) 852-2800",
+    phone: "(954) 492-4100",
     website: "https://www.pinecrest.edu",
     features: ["Prestigious college prep", "Strong arts & athletics", "Two-campus system"],
     schedule: "~8:30 AM start",
@@ -383,7 +378,7 @@ const SCHOOLS = [
     tuitionNum: 30000,
     ratio: "10:1",
     type: "Non-sectarian",
-    phone: "(954) 262-4400",
+    phone: "(954) 262-4506",
     website: "https://www.uschool.nova.edu",
     features: ["NSU campus resources", "Strong academics", "Athletics", "Arts programs"],
     schedule: "~8:00 AM start",
@@ -397,6 +392,7 @@ let activeTab = "active";
 let filterCounty = "all";
 let sortBy = "name";
 let searchQuery = "";
+let expandedParents = {};
 
 // ── API ──────────────────────────────────────────────────
 async function loadStates() {
@@ -492,14 +488,20 @@ function renderSchools() {
       ? `<span class="nix-meta">${state.nixedBy ? escapeHtml(state.nixedBy) + " · " : ""}${new Date(state.nixedAt).toLocaleDateString()}</span>`
       : "";
     const notesText = state.notes ? escapeHtml(state.notes) : "";
+    const hasChildren = s.children && s.children.length > 0;
+    const isExpanded = expandedParents[s.id];
 
-    return `
-      <tr class="${isNixed ? "row-nixed" : ""}" data-id="${s.id}">
+    let rows = `
+      <tr class="${isNixed ? "row-nixed" : ""} ${hasChildren ? "row-parent" : ""}" data-id="${s.id}">
         <td class="col-group-num">${s.group || "–"}</td>
         <td class="col-name">
-          <div class="school-name">${s.website ? `<a href="${s.website}" target="_blank" rel="noopener">${s.name}</a>` : s.name}</div>
+          <div class="school-name">
+            ${hasChildren ? `<button class="btn-expand" onclick="toggleParent('${s.id}')">${isExpanded ? "▾" : "▸"}</button> ` : ""}
+            ${s.website ? `<a href="${s.website}" target="_blank" rel="noopener">${s.name}</a>` : s.name}
+            ${hasChildren ? `<span class="campus-count">${s.children.length} campuses</span>` : ""}
+          </div>
           <div class="school-city">${s.city}</div>
-          <div class="school-features">${s.features.map((f) => `<span class="feature-tag">${f}</span>`).join("")}</div>
+          <div class="school-features">${(s.features || []).map((f) => `<span class="feature-tag">${f}</span>`).join("")}</div>
           ${nixSnippet ? `<div class="nix-reason">Nixed: ${nixSnippet}${nixMeta}</div>` : ""}
         </td>
         <td><span class="area-badge ${countyClass}">${s.county}</span></td>
@@ -521,6 +523,29 @@ function renderSchools() {
           }
         </td>
       </tr>`;
+
+    if (hasChildren && isExpanded) {
+      rows += s.children.map((c) => `
+        <tr class="row-child ${isNixed ? "row-nixed" : ""}" data-id="${c.id}" data-parent="${s.id}">
+          <td class="col-group-num"></td>
+          <td class="col-name">
+            <div class="school-name child-name">↳ ${c.name}</div>
+            <div class="school-city">${c.city}</div>
+          </td>
+          <td></td>
+          <td class="col-address">${c.address ? `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(c.address)}" target="_blank" rel="noopener" class="address-link">${c.address}</a>` : "–"}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>${c.phone ? `<a href="tel:${c.phone}" class="phone-link">${c.phone}</a>` : "–"}</td>
+          <td></td>
+          <td></td>
+        </tr>`).join("");
+    }
+
+    return rows;
   }).join("");
 
   renderMapMarkers();
@@ -617,7 +642,16 @@ function renderMapMarkers() {
   mapMarkers.forEach((m) => map.removeLayer(m));
   mapMarkers = [];
 
-  const schools = getFilteredSchools();
+  const filtered = getFilteredSchools();
+  // Expand parents into children for map pins
+  const schools = [];
+  filtered.forEach((s) => {
+    if (s.children) {
+      s.children.forEach((c) => schools.push({ ...s, ...c, children: undefined }));
+    } else {
+      schools.push(s);
+    }
+  });
   const bounds = [];
 
   schools.forEach((s) => {

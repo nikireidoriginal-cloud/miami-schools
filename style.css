@@ -368,6 +368,41 @@ tbody td {
 .btn-notes { color: var(--primary-light); border-color: var(--primary-light); }
 .btn-notes:hover { background: #ebf8ff; }
 
+/* ── Parent/Child rows ─────────────────────────────────── */
+.btn-expand {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--primary);
+  padding: 0;
+  margin-right: 0.2rem;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.btn-expand:hover { color: var(--primary-light); }
+
+.campus-count {
+  font-size: 0.72rem;
+  color: var(--text-light);
+  font-weight: 400;
+  margin-left: 0.4rem;
+}
+
+.row-parent { background: #fafbfd; }
+.row-parent:hover { background: #f0f4f8; }
+
+.row-child { background: #f7fafc; }
+.row-child:hover { background: #edf2f7; }
+
+.child-name {
+  font-weight: 500 !important;
+  font-size: 0.84rem !important;
+  color: var(--text-light);
+  padding-left: 0.5rem;
+}
+
 .empty-state {
   text-align: center;
   padding: 3rem 2rem;
